@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>暮らしのケア記録</title>
+  <meta name="description" content="訪問ケアスタッフ向け記録・共有アプリ" />
+  <meta name="theme-color" content="#4E7A5E" />
+  <!-- PWA: ホーム画面に追加したときのアイコン設定 -->
+  <link rel="apple-touch-icon" href="https://fav.farm/🌱" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif; background: #F8F4EE; }
+    #root { min-height: 100vh; }
+    /* ローディング表示 */
+    #loading {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; flex-direction: column; gap: 12px;
+      color: #4E7A5E; font-size: 16px;
+    }
+    .spinner {
+      width: 36px; height: 36px;
+      border: 3px solid #D8E4DC;
+      border-top-color: #4E7A5E;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div id="loading">
+    <div class="spinner"></div>
+    <div>🌱 読み込み中...</div>
+  </div>
+  <div id="root"></div>
+
+  <!-- React + Babel をCDNから読み込み -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel" src="./care-support-app.jsx" data-presets="react"></script>
+
+  <script>
+    // アプリ読み込み後にローディングを非表示
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        const loading = document.getElementById('loading');
+        if (loading) loading.style.display = 'none';
+      }, 500);
+    });
+  </script>
+</body>
+</html>
